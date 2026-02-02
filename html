@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxe | Minimal Luxury Collection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-black: #111111;
+            --secondary-black: #222222;
+            --off-white: #f8f8f8;
+            --gold-accent: #D4AF37;
+            --gold-light: #e6c566;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.15);
+            --border-radius-sm: 4px;
+            --border-radius-md: 8px;
+            --border-radius-lg: 16px;
+            --container-padding: 1.5rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary-black);
+            background-color: var(--off-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--container-padding);
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 0;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: var(--shadow-sm);
+            padding: 0.75rem 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: var(--primary-black);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: var(--gold-accent);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-black);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 0.9375rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: var(--transition);
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--gold-accent);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold-accent);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-black);
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(rgba(17, 17, 17, 0.7), rgba(17, 17, 17, 0.7)), url('https://placehold.co/1920x1080/111111/ffffff?text=LUXE+COLLECTION') center/cover no-repeat;
+            text-align: center;
+            color: white;
+            padding: 0 1.5rem;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 10;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--gold-accent);
+            color: var(--primary-black);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 1.125rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 1rem 3rem;
+            border-radius: var(--border-radius-md);
+            text-decoration: none;
+            transition: var(--transition);
+            border: 1px solid var(--gold-accent);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--gold-accent);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gold-light);
+            z-index: -1;
+            transition: var(--transition);
+            transform: scaleX(0);
+            transform-origin: right;
+        }
+
+        .cta-button:hover:after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Products Section */
+        .products-section {
+            padding: 8rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-title h2 {
+            font-size: 3.5rem;
+            display: inline-block;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: var(--gold-accent);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .product-image {
+            height: 350px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            display: block;
+        }
+
+        .product-content {
+            padding: 2rem;
+        }
+
+        .product-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            color: var(--secondary-black);
+            margin: 0.75rem 0;
+            font-weight: 500;
+        }
+
+        .product-description {
+            color: #666;
+            margin: 1rem 0 1.5rem;
+            font-size: 0.9375rem;
+            font-weight: 300;
+        }
+
+        .product-card .cta-button {
+            background: transparent;
+            color: var(--primary-black);
+            border: 1px solid var(--secondary-black);
+            padding: 0.75rem 2rem;
+            font-size: 0.9375rem;
+            width: 100%;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .product-card .cta-button:hover {
+            background: var(--secondary-black);
+            color: white;
+        }
+
+        .product-card .cta-button:after {
+            background: var(--secondary-black);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-black);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .copyright {
+            margin-top: 1.5rem;
+            opacity: 0.7;
+            font-size: 0.9375rem;
+            font-weight: 300;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            :root {
+                --container-padding: 1.25rem;
+            }
+            
+            .hero h1 {
+                font-size: 4rem;
+            }
+            
+            .hero p {
+                font-size: 1.25rem;
+            }
+            
+            .section-title h2 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                flex-direction: column;
+                background: white;
+                width: 80%;
+                height: calc(100vh - 70px);
+                padding: 2rem;
+                box-shadow: var(--shadow-lg);
+                transition: var(--transition);
+                align-items: flex-start;
+                gap: 1.5rem;
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .hero p {
+                font-size: 1.125rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 2rem;
+            }
+            
+            .product-image {
+                height: 300px;
+            }
+            
+            .section-title h2 {
+                font-size: 2.5rem;
+            }
+            
+            .products-section {
+                padding: 5rem 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .cta-button {
+                padding: 0.75rem 2rem;
+                font-size: 0.9375rem;
+                letter-spacing: 1.5px;
+            }
+            
+            .product-title {
+                font-size: 1.25rem;
+            }
+            
+            .product-price {
+                font-size: 1.125rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .products-section {
+                padding: 4rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="#" class="logo">LUX<span>E</span></a>
+            <button class="mobile-menu-btn" id="mobile-menu-btn">☰</button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#products">Collection</a></li>
+                <li><a href="#">Craftsmanship</a></li>
+                <li><a href="#">Journal</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <h1>Timeless Elegance</h1>
+            <p>Exquisitely crafted pieces for those who appreciate the finer things in life. Where minimalism meets luxury.</p>
+            <a href="#products" class="cta-button">Discover Collection</a>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section" id="products">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Collection</h2>
+            </div>
+            <div class="products-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://placehold.co/600x400/111111/ffffff?text=Horizon+Watch')"></div>
+                    <div class="product-content">
+                        <h3 class="product-title">Horizon Watch</h3>
+                        <p class="product-price">$1,250</p>
+                        <p class="product-description">Handcrafted timepiece with sapphire crystal and Italian leather strap. Limited edition of 50 pieces worldwide.</p>
+                        <a href="#" class="cta-button">Buy Now</a>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://placehold.co/600x400/222222/ffffff?text=Aurora+Vase')"></div>
+                    <div class="product-content">
+                        <h3 class="product-title">Aurora Vase</h3>
+                        <p class="product-price">$895</p>
+                        <p class="product-description">Sculpted from a single block of Carrara marble. Each piece features unique natural veining patterns.</p>
+                        <a href="#" class="cta-button">Buy Now</a>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://placehold.co/600x400/000000/ffffff?text=Essence+Fragrance')"></div>
+                    <div class="product-content">
+                        <h3 class="product-title">Essence Fragrance</h3>
+                        <p class="product-price">$275</p>
+                        <p class="product-description">Artisanal perfume crafted with rare oud and amber. Presented in hand-blown glass bottle with gold accents.</p>
+                        <a href="#" class="cta-button">Buy Now</a>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://placehold.co/600x400/333333/ffffff?text=Apex+Leather+Bag')"></div>
+                    <div class="product-content">
+                        <h3 class="product-title">Apex Leather Bag</h3>
+                        <p class="product-price">$1,895</p>
+                        <p class="product-description">Full-grain leather handbag with 24k gold hardware. Meticulously crafted by master artisans in Florence.</p>
+                        <a href="#" class="cta-button">Buy Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <a href="#" class="logo" style="color: white; font-size: 2rem;">LUX<span style="color: var(--gold-accent);">E</span></a>
+                <p class="copyright">© 2026 Luxe Collection. All rights reserved. Crafted with precision for the discerning few.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const navLinks = document.getElementById('nav-links');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') ? '✕' : '☰';
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.innerHTML = '☰';
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
